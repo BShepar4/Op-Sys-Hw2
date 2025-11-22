@@ -23,6 +23,7 @@ int main() {
     std::vector<int> temp;
     int i = 1;
     int active = 0;
+    int collect = 0;
 
     while (getline (info, input)) {
         if (input == "allocation") {   
@@ -36,9 +37,15 @@ int main() {
         }
         if (input[0] == '{') {
             i = 1;
-            while (input.substr(i,1) != "}") {
+            while (i < input.size() && input[i] != '}') {
                 if (input[i] != ' ' && input[i] !=',') {
-                    temp.push_back(input[i] - '0');
+                    while (i < input.size() && input[i] != ' ' && input[i] != ',') {
+                        collect = (collect * 10);
+                        collect += (input[i] - '0');
+                        i++;
+                    }
+                    temp.push_back(collect);
+                    collect = 0;
                 }
                 i++;
             }
